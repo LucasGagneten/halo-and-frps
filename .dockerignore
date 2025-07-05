@@ -1,0 +1,7 @@
+.git
+.gitignore
+nodemodules
+.log
+.DSStore
+.idea
+.md
