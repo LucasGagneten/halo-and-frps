@@ -2,7 +2,7 @@
 FROM alpine:3.18 as frp_builder
 RUN wget -O /tmp/frps.tar.gz https://github.com/fatedier/frp/releases/download/v0.63.0/frp_v0.63.0_linux_amd64.tar.gz \
     && tar -zxvf /tmp/frps.tar.gz -C /tmp \
-    && mv /tmp/frp_${FRPS_VERSION}_linux_amd64/frps /usr/local/bin/ \
+    && mv /tmp/frp_v0.63.0_linux_amd64/frps /usr/local/bin/ \
     && upx --best --lzma /usr/local/bin/frps  # UPX压缩二进制文件
 
 FROM eclipse-temurin:17-jre-alpine
