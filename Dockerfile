@@ -1,7 +1,6 @@
 # 多阶段构建压缩镜像体积
 FROM alpine:3.18 as frp_builder
-ARG FRPS_VERSION=0.52.3
-RUN wget -O /tmp/frps.tar.gz https://github.com/fatedier/frp/releases/download/v${FRPS_VERSION}/frp_${FRPS_VERSION}_linux_amd64.tar.gz \
+RUN wget -O /tmp/frps.tar.gz https://github.com/fatedier/frp/releases/download/v0.63.0/frp_v0.63.0_linux_amd64.tar.gz \
     && tar -zxvf /tmp/frps.tar.gz -C /tmp \
     && mv /tmp/frp_${FRPS_VERSION}_linux_amd64/frps /usr/local/bin/ \
     && upx --best --lzma /usr/local/bin/frps  # UPX压缩二进制文件
