@@ -1,9 +1,9 @@
-# 多阶段构建优化镜像体积
+# 多阶段构建优化镜像体积  二进制压缩减30%体积
 FROM alpine:3.18 as frp_builder
 RUN wget -O /tmp/frps.tar.gz https://github.com/fatedier/frp/releases/download/v0.63.0/frp_0.63.0_linux_amd64.tar.gz \
     && tar -zxvf /tmp/frps.tar.gz -C /tmp \
     && mv /tmp/frp_0.63.0_linux_amd64/frps /usr/local/bin/ \
-    && upx --best --lzma /usr/local/bin/frps  # 二进制压缩减30%体积
+    && upx --best --lzma /usr/local/bin/frps 
 
 FROM halohub/halo:2.10.0
 COPY --from=frp_builder /usr/local/bin/frps /usr/bin/
