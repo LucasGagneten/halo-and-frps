@@ -19,6 +19,6 @@ ENV JAVA_OPTS="-Xms128m -Xmx256m -XX:MaxRAM=384m"
 
 # 持久化数据卷
 VOLUME /root/.halo
-EXPOSE 8090 7000
+EXPOSE 8090 7000 7500
 
 ENTRYPOINT ["supervisord", "-n"]
