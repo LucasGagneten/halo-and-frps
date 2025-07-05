@@ -19,7 +19,7 @@ COPY supervisord.conf /etc/supervisor/conf.d/
 ENV JAVA_OPTS="-Xms128m -Xmx256m"
 
 # 端口配置
-EXPOSE 80 7000 7500  # Halo:80(原8090) FRPS:7000+7500
+EXPOSE 80 7000 7500
 
 # 启动命令
 CMD ["supervisord", "-n"]
