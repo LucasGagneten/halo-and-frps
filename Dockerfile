@@ -1,23 +1,25 @@
-# 多阶段构建压缩镜像体积
+# 多阶段构建优化镜像体积
 FROM alpine:3.18 as frp_builder
-RUN wget -O /tmp/frps.tar.gz https://github.com/fatedier/frp/releases/download/v0.63.0/frp_v0.63.0_linux_amd64.tar.gz \
+RUN wget -O /tmp/frps.tar.gz https://github.com/fatedier/frp/releases/download/v0.63.0/frp_0.63.0_linux_amd64.tar.gz \
     && tar -zxvf /tmp/frps.tar.gz -C /tmp \
-    && mv /tmp/frp_v0.63.0_linux_amd64/frps /usr/local/bin/ \
-    && upx --best --lzma /usr/local/bin/frps  # UPX压缩二进制文件
+    && mv /tmp/frp_0.63.0_linux_amd64/frps /usr/local/bin/ \
+    && upx --best --lzma /usr/local/bin/frps  # 二进制压缩减30%体积
 
-FROM eclipse-temurin:17-jre-alpine
+FROM halohub/halo:2.10.0
 COPY --from=frp_builder /usr/local/bin/frps /usr/bin/
 
-# 最小化安装依赖
-RUN apk add --no-cache supervisor bash
+# 安装进程管理工具
+RUN apt-get update && apt-get install -y supervisor && rm -rf /var/lib/apt/lists/*
 
-# 配置文件和内存限制
-COPY frps-minimal.ini /etc/frps.ini
+# 配置文件
+COPY frps.ini /etc/frps.ini
 COPY supervisord.conf /etc/supervisor/conf.d/
-ENV JAVA_OPTS="-Xms128m -Xmx256m -XX:MaxRAM=384m"
 
-# 持久化数据卷
-VOLUME /root/.halo
-EXPOSE 8090 7000 7500
+# 环境变量
+ENV JAVA_OPTS="-Xms128m -Xmx256m"
 
-ENTRYPOINT ["supervisord", "-n"]
+# 端口配置
+EXPOSE 80 7000 7500  # Halo:80(原8090) FRPS:7000+7500
+
+# 启动命令
+CMD ["supervisord", "-n"]
