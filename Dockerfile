@@ -4,7 +4,7 @@ RUN wget -O /tmp/frps.tar.gz https://github.com/fatedier/frp/releases/download/v
     && tar -zxvf /tmp/frps.tar.gz -C /tmp \
     && mv /tmp/frp0.63.0linuxamd64/frps /usr/local/bin/ 
 FROM halohub/halo:2.10.0
-COPY --from=frp_builder /usr/local/bin/frps /usr/bin/
+COPY --from=frpbuilder /usr/local/bin/frps /usr/bin/
 
 # 安装进程管理工具
 RUN apt-get update && apt-get install -y supervisor && rm -rf /var/lib/apt/lists/*
