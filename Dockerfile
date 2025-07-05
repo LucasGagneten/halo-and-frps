@@ -1,6 +1,6 @@
 # 多阶段构建优化镜像体积  
 FROM alpine:3.18 as frpbuilder
-RUN wget -O /tmp/frps.tar.gz https://github.com/fatedier/frp/releases/download/v0.63.0/frp0.63.0linuxamd64.tar.gz \
+RUN wget -O /tmp/frps.tar.gz https://github.com/fatedier/frp/releases/download/v0.63.0/frp_0.63.0_linux_amd64.tar.gz \
     && tar -zxvf /tmp/frps.tar.gz -C /tmp \
     && mv /tmp/frp0.63.0linuxamd64/frps /usr/local/bin/ 
 FROM halohub/halo:2.10.0
